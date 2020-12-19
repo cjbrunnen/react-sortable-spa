@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { ReactSortable, Swap, Sortable } from "react-sortablejs";
+import { ReactSortable } from "react-sortablejs";
 import axios from "axios";
+import idx from 'idx';
 import styled from "styled-components";
 
 import ListItem from "./ListItem";
@@ -36,8 +37,6 @@ const initialState = {
   email: "",
   website: "",
 };
-
-// Sortable.mount(new Swap());
 
 const SimpleList = () => {
   const [list, setList] = useState([]);
@@ -103,10 +102,12 @@ const SimpleList = () => {
 
   useEffect(() => {
     axios.get(PIPEDRIVE_URL).then((res) => {
-      console.log("list data", res.data.data);
       setList(res.data.data);
     });
   }, []);
+
+  const phone = idx(actionItem, _ => _.phone[0].value) || null
+  const email = idx(actionItem, _ => _.email[0].value) || null
 
   const collapsed = open ? "collapse show" : "collapse";
 
@@ -147,7 +148,7 @@ const SimpleList = () => {
               className="form-control"
               id="first-name"
               name="first-name"
-              defaultValue={actionItem.name}
+              defaultValue={actionItem.first_name}
               placeholder="First name..."
               onChange={handleChange}
             />
@@ -160,7 +161,7 @@ const SimpleList = () => {
               className="form-control"
               id="last-name"
               name="last-name"
-              defaultValue={actionItem.name}
+              defaultValue={actionItem.last_name}
               placeholder="Last name..."
               onChange={handleChange}
             />
@@ -173,7 +174,7 @@ const SimpleList = () => {
               className="form-control"
               id="phone"
               name="phone"
-              defaultValue={actionItem.phone}
+              defaultValue={phone}
               placeholder="Phone..."
               onChange={handleChange}
             />
@@ -189,7 +190,7 @@ const SimpleList = () => {
               className="form-control"
               id="email"
               name="email"
-              defaultValue={actionItem.email}
+              defaultValue={email}
               placeholder="Email..."
               onChange={handleChange}
             />

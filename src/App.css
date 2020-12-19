@@ -2,35 +2,36 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
 .App-header {
-  background-color: #26292C;
-  height: 50px;
+  align-items: left;
+  background-color: #26292c;
+  color: white;
   display: flex;
   flex-direction: column;
-  align-items: left;
-  justify-content: left;
   font-size: calc(10px + 2vmin);
-  color: white;
+  height: 50px;
+  justify-content: left;
+}
+
+#top-bar {
+  margin: 0 auto;
+  text-align: left;
+  width: 90%;
 }
 
 #pipedrive-logo {
+  padding: 5px 0;
   width: 140px;
-  padding: 5px;
-  margin: 0 10px;
 }
 
 .main {
-  width: 90%;
   margin: 0 auto;
+  margin-bottom: 70px;
+  width: 90%;
+}
+
+.footer {
+  background-color: #26292c;
+  bottom: 0;
+  width: 100%;
 }

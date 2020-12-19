@@ -33,7 +33,7 @@ const ActionModal = ({ item, handleDelete, setOpen }) => {
               className="btn btn-warning"
               onClick={() => scrollTop()}
             >
-              Edit item
+              Edit
             </button>
             <button
               type="button"
@@ -41,7 +41,7 @@ const ActionModal = ({ item, handleDelete, setOpen }) => {
               data-dismiss="modal"
               onClick={() => handleDelete(item.id)}
             >
-              Delete item
+              Delete
             </button>
           </div>
         </div>
