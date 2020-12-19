@@ -1,6 +1,11 @@
 import React from "react";
 
-const ActionModal = ({ item, handleDelete }) => {
+
+const ActionModal = ({ item, handleDelete, setOpen }) => {
+  const scrollTop = () =>{
+    window.scrollTo({top: 0, behavior: 'smooth'});
+    setOpen(true)
+  };
   return (
     <div className="modal fade" tabIndex="-1" id="actionModal" role="dialog">
       <div className="modal-dialog" role="document">
@@ -26,6 +31,7 @@ const ActionModal = ({ item, handleDelete }) => {
               type="button"
               data-dismiss="modal"
               className="btn btn-warning"
+              onClick={() => scrollTop()}
             >
               Edit item
             </button>

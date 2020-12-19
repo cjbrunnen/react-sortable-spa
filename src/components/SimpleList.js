@@ -1,12 +1,33 @@
 import React, { useEffect, useState } from "react";
 import { ReactSortable, Swap, Sortable } from "react-sortablejs";
 import axios from "axios";
+import styled from "styled-components";
 
 import ListItem from "./ListItem";
 import { PIPEDRIVE_URL } from "../constants";
 import ActionModal from "./ActionModal";
 
 import "./SimpleList.css";
+
+const AppTitle = styled.h1`
+  text-align: left;
+  font-size: 24px;
+  margin-top: 20px;
+`;
+
+const AddNew = styled.div`
+  padding: 0 20px;
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 5px;
+
+  &:hover {
+      background-color: #26292c;
+      color: #fff;
+  }
+`;
 
 const initialState = {
   id: "",
@@ -21,8 +42,7 @@ const initialState = {
 const SimpleList = () => {
   const [list, setList] = useState([]);
   const [user, setUser] = useState(initialState);
-  const [open, setOpen] = useState(false)
-  //   const [isGrid, setIsGrid] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const [isEdit, setIsEdit] = useState(false);
   const [isSuccess, setSuccess] = useState(false);
@@ -88,7 +108,7 @@ const SimpleList = () => {
     });
   }, []);
 
-    const collapsed = open ? "collapse show" : "collapse"
+  const collapsed = open ? "collapse show" : "collapse";
 
   return (
     <>
@@ -110,7 +130,13 @@ const SimpleList = () => {
       ) : (
         ""
       )}
-      <button onClick={() => setOpen(!open)}>Add Person</button>
+      <div className="d-flex w-100 justify-content-between">
+        <AppTitle>People's List</AppTitle>
+        <AddNew onClick={() => setOpen(!open)}>
+          {open ? "Close" : "Add New Person"}
+        </AddNew>
+      </div>
+
       <form onSubmit={handleSubmit} id="list-form" className={collapsed}>
         <div className="form-row">
           <div className="col">
@@ -199,7 +225,7 @@ const SimpleList = () => {
       <hr className="mb-4" />
 
       <ReactSortable
-        swap
+        multiDrag
         id="people-list"
         className="list-group"
         chosenClass="chosen-list"
@@ -213,7 +239,7 @@ const SimpleList = () => {
           ))}
       </ReactSortable>
 
-      <ActionModal item={actionItem} handleDelete={handleDelete} />
+      <ActionModal item={actionItem} handleDelete={handleDelete} setOpen={setOpen}/>
     </>
   );
 };

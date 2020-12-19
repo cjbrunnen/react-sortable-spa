@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import OrgIcon from "../images/org-icon.png";
-import Avatar from './Avatar'
+import Avatar from "./Avatar";
 
 const Item = styled.div`
   background-color: #fff6;
@@ -23,6 +23,11 @@ const OrgIconImg = styled.img`
   padding: 3px 5px 3px 0;
 `;
 
+const AvatarDiv = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+
 const ListItem = ({ item, prepareAction }) => {
   return (
     <Item
@@ -36,7 +41,7 @@ const ListItem = ({ item, prepareAction }) => {
       <div className="d-flex w-100 justify-content-between">
         <div className="container">
           <div className="row">
-            <div className="col-9">
+            <div className="col-8">
               <div className="row">
                 <Name className="mb-1">{item.name}</Name>
               </div>
@@ -45,9 +50,9 @@ const ListItem = ({ item, prepareAction }) => {
                 <Org className="mb-1">{item.org_name}</Org>
               </div>
             </div>
-            <div className="col-3">
-                <Avatar name={item.name} />
-            </div>
+            <AvatarDiv className="col-4">
+              <Avatar name={item.name} />
+            </AvatarDiv>
           </div>
         </div>
       </div>

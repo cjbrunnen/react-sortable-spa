@@ -1,13 +1,6 @@
 import pipedrive from "./images/pipedrive-logo.png";
 import "./App.css";
 import SimpleList from "./components/SimpleList";
-import styled from 'styled-components'
-
-const AppTitle = styled.h1`
-  text-align: left;
-  font-size: 24px;
-  margin-top: 20px;
-`
 
 function App() {
   return (
@@ -21,7 +14,6 @@ function App() {
       </header>
 
       <div className="main">
-        <AppTitle>People's List</AppTitle>
         
         <SimpleList />
       </div>

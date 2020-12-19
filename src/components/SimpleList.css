@@ -60,7 +60,16 @@ input:checked + .slider:before {
   transform: translateX(26px);
 }
 
+#list-form {
+  margin: 20px 0;
+  background-color: #26292c;
+  color: white;
+  border-radius: 5px;
+  padding: 20px;
+}
+
 .list-group-item {
-    border-top: 1px solid rgba(0,0,0,.125);
-    margin: 5px 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.125);
+  border-top-width: 1px !important;
+  margin: 5px 0;
 }
