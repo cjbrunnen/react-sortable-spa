@@ -14,4 +14,4 @@ Use the form to Edit or Delete contacts.
 
 | Contact List | Edit contact | Drag and Drop |
 |:---:|:---:|:---:|
-| ![](./images/contact-list.png) | ![](./images/edit-contact.png) | ![](./images/drag-drop.png) |
+| ![](./contact-list.png) | ![](./edit-contact.png) | ![](./drag-drop.png) |
