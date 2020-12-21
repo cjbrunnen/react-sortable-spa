@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { ReactSortable } from "react-sortablejs";
 import axios from "axios";
-import idx from 'idx';
+import idx from "idx";
 import styled from "styled-components";
 
 import ListItem from "./ListItem";
-import { PIPEDRIVE_URL } from "../constants";
+import { PIPEDRIVE_URL_GET_PERSONS, apiGetPerson } from "../constants";
 import ActionModal from "./ActionModal";
 
 import "./SimpleList.css";
@@ -25,17 +25,15 @@ const AddNew = styled.div`
   border-radius: 5px;
 
   &:hover {
-      background-color: #26292c;
-      color: #fff;
+    background-color: #26292c;
+    color: #fff;
   }
 `;
 
 const initialState = {
-  id: "",
   name: "",
   phone: "",
   email: "",
-  website: "",
 };
 
 const SimpleList = () => {
@@ -47,6 +45,7 @@ const SimpleList = () => {
   const [isSuccess, setSuccess] = useState(false);
   const [actionItem, setActionItem] = useState(initialState);
 
+  // edit or update form fields in UI
   const handleChange = (event) => {
     if (isEdit) {
       setActionItem({
@@ -68,19 +67,38 @@ const SimpleList = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
     if (isEdit) {
       const copyList = [...list];
       let index = copyList.findIndex((item) => item.id === actionItem.id);
-
       copyList[index] = actionItem;
       setList(copyList);
+
+      const editUser = async function () {
+        const personUrl = await apiGetPerson(actionItem.id);
+        let personData = await axios.get(personUrl);
+
+        personData.data.data = actionItem;
+
+        // DEMO RESPONSE
+        return console.log(
+          "you updated a user: (see personData.data.data)",
+          personData
+        );
+        // SEND PUT TO API HERE:
+        // return await axios.put(personUrl, personData);
+      };
+      editUser();
     } else {
       setList([...list, user]);
+
+      // DEMO RESPONSE
+      console.log("you created a new user: ", user);
+      // SEND POST TO API HERE:
+      // return await axios.post(PIPEDRIVE_URL_GET_PERSONS, user);
     }
 
     setSuccess(true);
-
+    setOpen(false)
     reset();
   };
 
@@ -101,13 +119,13 @@ const SimpleList = () => {
   };
 
   useEffect(() => {
-    axios.get(PIPEDRIVE_URL).then((res) => {
+    axios.get(PIPEDRIVE_URL_GET_PERSONS).then((res) => {
       setList(res.data.data);
     });
   }, []);
 
-  const phone = idx(actionItem, _ => _.phone[0].value) || null
-  const email = idx(actionItem, _ => _.email[0].value) || null
+  const phone = idx(actionItem, (_) => _.phone[0].value) || null;
+  const email = idx(actionItem, (_) => _.email[0].value) || null;
 
   const collapsed = open ? "collapse show" : "collapse";
 
@@ -166,19 +184,6 @@ const SimpleList = () => {
               onChange={handleChange}
             />
           </div>
-          <div className="col">
-            <label htmlFor="phone">Phone:</label>
-            <input
-              type="text"
-              required
-              className="form-control"
-              id="phone"
-              name="phone"
-              defaultValue={phone}
-              placeholder="Phone..."
-              onChange={handleChange}
-            />
-          </div>
         </div>
 
         <div className="form-row mt-2">
@@ -196,15 +201,15 @@ const SimpleList = () => {
             />
           </div>
           <div className="col">
-            <label htmlFor="organisation">Organisation:</label>
+            <label htmlFor="phone">Phone:</label>
             <input
               type="text"
               required
               className="form-control"
-              id="organisation"
-              name="organisation"
-              defaultValue={actionItem.org_name}
-              placeholder="Organisation..."
+              id="phone"
+              name="phone"
+              defaultValue={phone}
+              placeholder="Phone..."
               onChange={handleChange}
             />
           </div>
@@ -240,7 +245,11 @@ const SimpleList = () => {
           ))}
       </ReactSortable>
 
-      <ActionModal item={actionItem} handleDelete={handleDelete} setOpen={setOpen}/>
+      <ActionModal
+        item={actionItem}
+        handleDelete={handleDelete}
+        setOpen={setOpen}
+      />
     </>
   );
 };
